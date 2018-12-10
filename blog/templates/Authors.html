@@ -3,7 +3,7 @@
 {% block main %}
 <ul>
 {% for author in object_list %}
-  <li><a href="{% url 'follow' author.username %}">{{ author.username }}</a></li>
+  <li><a href="{% url 'follow' author.username request.path %}">{{ author.username }}</a></li>
 {% endfor %}
 </ul>
 {% endblock %}

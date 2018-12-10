@@ -1,7 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
+from unidecode import unidecode
 
 User = get_user_model()
 
@@ -19,8 +21,9 @@ class Post(models.Model):
     title = models.CharField(max_length=256)
     content = models.TextField();
     created = models.DateTimeField(auto_now_add=True)
-    # def get_absolute_url(self):
-    #     return reverse('post', args=[slugify(self.user.username), self.id])
+    def get_absolute_url(self):
+#         return reverse('detail', args=[slugify(self.user.username), slugify(unidecode(self.title))])
+          return reverse('detail', args=[slugify(self.user.username), self.id])
     class Meta:
         app_label = 'blog'
 

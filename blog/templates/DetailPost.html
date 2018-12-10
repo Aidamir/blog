@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block main %}
+<ul>
+    <li>{{ object.title }}</li>
+    <li>{{ object.content }}</li>
+</ul>
+<p>
+    <a href="{% url 'follow' object.user.username request.path %}">Follow {{ author.username }}</a></li>
+</p>
+{% endblock %}

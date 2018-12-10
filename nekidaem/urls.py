@@ -15,12 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
+from django.contrib.auth.views import LoginView, LogoutView
 from blog.views import *
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path("^follow/(?P<slug>[0-9a-zA-Z_-]+)/$", Follow.as_view(), name="follow"),
+    path("login/", LoginView.as_view(), name='login'),
+    path("logout/", LogoutView.as_view(), name='logout'),
+    re_path("^follow/(?P<slug>[0-9a-zA-Z_-]+)/(?P<to>[/0-9a-zA-Z_-]+)$", Follow.as_view(), name="follow"),
     re_path("^authors/$", Authors.as_view(), name="authors"),
+    re_path("^posts/$", Posts.as_view(), name="posts"),
+    re_path("^create/$", CreatePost.as_view(), name="create"),
+#    re_path("^([0-9a-zA-Z_-]+)/([0-9a-zA-Z_-]+)$", DetailPost.as_view(), name="detail"),
+    re_path("^([0-9a-zA-Z_-]+)/(?P<pk>[0-9]+)$", DetailPost.as_view(), name="detail"),
 ]
 
 # from django.conf.urls import url, include
