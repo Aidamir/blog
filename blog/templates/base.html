@@ -13,12 +13,14 @@
 <br/>
 {% if request.user.is_authenticated %}
 Welcome {{ request.user.username }} | <a href="{% url 'logout' %}">Logout</a>
+    <br/><br/>
 <h2>
     <a href="{% url 'create'%}">Create post</a> | <a href="{% url 'posts'%}">Posts</a> | <a href="{% url 'authors'%}">Authors</a>
 </h2>
 {% else  %}
     <h2> Welcome to blog app </h2>
 {% endif %}
+
 <div class="container">
 {% block main %}
 {% endblock %}

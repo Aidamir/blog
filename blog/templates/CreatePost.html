@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
 {% block main %}
-<form method="post">
+<div style="text-align: justify">
+    <form method="post">
         {% csrf_token %}
     {{  form.as_p }}
-    <button type="submit">Submit</button>
-</form>
+    <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+</div>
 {% endblock %}

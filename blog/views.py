@@ -44,6 +44,12 @@ class CreatePost(CreateView):
     model = Post
     fields = ['title', 'content']
 
+    def get_form_class(self):
+        form = super(CreatePost, self).get_form_class()
+        for field in form.base_fields:
+            form.base_fields[field].widget.attrs['class'] = 'form-control'
+        return form
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(CreatePost, self).form_valid(form)
