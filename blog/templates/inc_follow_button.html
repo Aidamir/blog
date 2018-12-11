@@ -1,6 +1,6 @@
 {% load blog_tags %}
     {%  if request.user|is_follower_of:blogger %}
-        <a href="{% url 'unfollow' blogger request.path %}"><button>Unfollow {{ blogger }}</button></a>
+        <a class="btn btn-warning" role="button" href="{% url 'unfollow' blogger request.path %}">Unfollow {{ blogger }}</a>
     {%  else  %}
-        <a href="{% url 'follow' blogger request.path %}"><button>Follow {{ blogger }}</button></a>
+        <a class="btn btn-success" role="button" href="{% url 'follow' blogger request.path %}">Follow {{ blogger }}</a>
     {%  endif %}

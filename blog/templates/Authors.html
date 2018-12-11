@@ -2,9 +2,9 @@
 {% load blog_tags %}
 
 {% block main %}
-<ul>
+<ul class="list-group">
 {% for author in object_list %}
-  <li>{{ author.username }}
+  <li class="list-group-item">{{ author.username }}
       <!-- <a href="{% url 'follow' author.username request.path %}">{{ author.username }}</a> -->
   {% with author as blogger %}
       {% include "inc_follow_button.html" %}

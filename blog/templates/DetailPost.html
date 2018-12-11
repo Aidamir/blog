@@ -1,12 +1,16 @@
 {% extends "base.html" %}
+{% load blog_tags %}
 
 {% block main %}
 <p>
 </p>
 <h3>{{ object.title }} </h3>
 At {{ object.created }} By {{ object.user.username }}
-<p>{{ object.content }}</p>
+<p style="text-align: justify">{{ object.content }}</p>
     {% with object.user as blogger %}
       {% include "inc_follow_button.html" %}
     {% endwith %}
+{% if not object|is_read:request.user %}
+    <a class="btn btn-warning" role="button" href="{% url 'markread' object.id request.path %}">Mark read</a>
+{% endif %}
 {% endblock %}
