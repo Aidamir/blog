@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load blog_tags %}
+
+{% block main %}
+<ul>
+{% for post in object_list %}
+  <li>{{ post.created }} <a href="{% url 'detail' post.user.username post.id %}">{{ post.title }}</a> By {{ post.user.username }}
+  {% with post.user as blogger %}
+      {% include "inc_follow_button.html" %}
+  {% endwith %}
+  </li>
+{% endfor %}
+</ul>
+{% endblock %}

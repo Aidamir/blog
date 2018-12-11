@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <title>Blog test app</title>
 </head>
-<body>
+<body style="text-align: center">
+{% if request.user.is_authenticated  %}
+Welcome {{ request.user.username }} | <a href="{% url 'logout' %}">Logout</a>
+{% endif %}
+<h2 >
+    <a href="{% url 'create'%}">Create post</a> | <a href="{% url 'posts'%}">Posts</a> | <a href="{% url 'authors'%}">Authors</a>
+</h2>
 {% block main %}
 
 {% endblock %}

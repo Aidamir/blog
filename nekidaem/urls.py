@@ -20,10 +20,12 @@ from blog.views import *
 
 
 urlpatterns = [
+    path('', Posts.as_view(), name='home'),
     path('admin/', admin.site.urls),
-    path("login/", LoginView.as_view(), name='login'),
-    path("logout/", LogoutView.as_view(), name='logout'),
-    re_path("^follow/(?P<slug>[0-9a-zA-Z_-]+)/(?P<to>[/0-9a-zA-Z_-]+)$", Follow.as_view(), name="follow"),
+    path("accounts/login/", LoginView.as_view(), name='login'),
+    path("accounts/logout/", LogoutView.as_view(), name='logout'),
+    re_path("^follow/(?P<slug>[0-9a-zA-Z_-]+)/(?P<to>[/0-9a-zA-Z_-]+)$", FollowBlog.as_view(), name="follow"),
+    re_path("^unfollow/(?P<slug>[0-9a-zA-Z_-]+)/(?P<to>[/0-9a-zA-Z_-]+)$", UnFollowBlog.as_view(), name="unfollow"),
     re_path("^authors/$", Authors.as_view(), name="authors"),
     re_path("^posts/$", Posts.as_view(), name="posts"),
     re_path("^create/$", CreatePost.as_view(), name="create"),
@@ -31,16 +33,3 @@ urlpatterns = [
     re_path("^([0-9a-zA-Z_-]+)/(?P<pk>[0-9]+)$", DetailPost.as_view(), name="detail"),
 ]
 
-# from django.conf.urls import url, include
-# from django.conf.urls.static import static
-# from django.contrib import admin
-# from django.urls import path
-# from filebrowser.sites import site
-# from django.conf import settings
-#
-# urlpatterns = [
-#     path('admin/', admin.site.urls),
-#     url(r'^admin/filebrowser/', site.urls),
-#     url(r'^tinymce/', include('tinymce.urls')),
-#
-# ]

@@ -1,9 +1,15 @@
 {% extends "base.html" %}
+{% load blog_tags %}
 
 {% block main %}
 <ul>
 {% for author in object_list %}
-  <li><a href="{% url 'follow' author.username request.path %}">{{ author.username }}</a></li>
+  <li>{{ author.username }}
+      <!-- <a href="{% url 'follow' author.username request.path %}">{{ author.username }}</a> -->
+  {% with author as blogger %}
+      {% include "inc_follow_button.html" %}
+  {% endwith %}
+  </li>
 {% endfor %}
 </ul>
 {% endblock %}

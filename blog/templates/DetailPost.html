@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block main %}
-<ul>
-    <li>{{ object.title }}</li>
-    <li>{{ object.content }}</li>
-</ul>
 <p>
-    <a href="{% url 'follow' object.user.username request.path %}">Follow {{ author.username }}</a></li>
 </p>
+<h3>{{ object.created }} | {{ object.title }} By {{ object.user.username }}</h3>
+<p>{{ object.content }}</p>
+    {% with object.user as blogger %}
+      {% include "inc_follow_button.html" %}
+    {% endwith %}
 {% endblock %}
