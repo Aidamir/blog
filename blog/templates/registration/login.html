@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block main %}
     <form method="POST">
         {% csrf_token %}
         <p>
@@ -16,5 +12,4 @@
         </p>
         <button type="submit">Login</button>
     </form>
-</body>
-</html>
+{% endblock %}

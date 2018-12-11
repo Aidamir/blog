@@ -22,7 +22,7 @@ class Posts(ListView):
         return super(Posts, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
-        return super(Posts, self).get_queryset().filter(user__blogger__follower=self.request.user).exclude(user=self.request.user)
+        return super(Posts, self).get_queryset().filter(user__blogger__follower=self.request.user).exclude(user=self.request.user).order_by('-created')
 
 
 @method_decorator(login_required, name='dispatch')

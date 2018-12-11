@@ -3,7 +3,8 @@
 {% block main %}
 <p>
 </p>
-<h3>{{ object.created }} | {{ object.title }} By {{ object.user.username }}</h3>
+<h3>{{ object.title }} </h3>
+At {{ object.created }} By {{ object.user.username }}
 <p>{{ object.content }}</p>
     {% with object.user as blogger %}
       {% include "inc_follow_button.html" %}
