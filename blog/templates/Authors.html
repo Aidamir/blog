@@ -12,4 +12,7 @@
   </li>
 {% endfor %}
 </ul>
+    {% with "authors" as page_url  %}
+        {% include "inc_paginator.html" %}
+    {% endwith %}
 {% endblock %}

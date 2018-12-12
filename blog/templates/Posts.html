@@ -11,4 +11,7 @@
   </li>
 {% endfor %}
 </ul>
+    {% with "posts" as page_url  %}
+        {% include "inc_paginator.html" %}
+    {% endwith %}
 {% endblock %}

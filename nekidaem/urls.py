@@ -19,6 +19,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from blog.views import *
 
 
+
 urlpatterns = [
     path('', Posts.as_view(), name='home'),
     path('admin/', admin.site.urls),
@@ -28,10 +29,10 @@ urlpatterns = [
     re_path("^unfollow/(?P<slug>[0-9a-zA-Z_-]+)/(?P<to>[/0-9a-zA-Z_-]+)$", UnFollowBlog.as_view(), name="unfollow"),
     re_path("^markread/(?P<pk>[0-9]+)/(?P<to>[/0-9a-zA-Z_-]+)$", MarkRead.as_view(), name="markread"),
     re_path("^authors/$", Authors.as_view(), name="authors"),
-    re_path("^posts/$", Posts.as_view(), name="posts"),
+    re_path("^posts/(?P<page>\d+)?$", Posts.as_view(), name="posts"),
     re_path("^create/$", CreatePost.as_view(), name="create"),
 #    re_path("^([0-9a-zA-Z_-]+)/([0-9a-zA-Z_-]+)$", DetailPost.as_view(), name="detail"),
     re_path("^([0-9a-zA-Z_-]+)/(?P<pk>[0-9]+)$", DetailPost.as_view(), name="detail"),
-
+    # re_path("^([0-9a-zA-Z_-]+)/(?P<page>\d+)?$", Posts.as_view(), name="blog"),
 ]
 

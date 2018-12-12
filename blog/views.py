@@ -9,10 +9,12 @@ from django.views.generic.base import RedirectView
 from blog.models import *
 
 
+
 @method_decorator(login_required, name='dispatch')
 class Posts(ListView):
     template_name = "Posts.html"
     model = Post
+    paginate_by = 10
 
     def get(self, request, *args, **kwargs):
         if not request.user.follower.count():
@@ -27,10 +29,10 @@ class Posts(ListView):
 class Authors(ListView):
     template_name = "Authors.html"
     model = User
+    paginate_by = 10
 
     def get_queryset(self):
         return super(Authors, self).get_queryset().exclude(id=self.request.user.id)
-
 
 @method_decorator(login_required, name='dispatch')
 class DetailPost(DetailView):
