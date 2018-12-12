@@ -6,12 +6,12 @@
 </p>
 <h3>{{ object.title }} </h3>
 At {{ object.created }} By {{ object.user.username }}
-{% if not object.user == request.user %}
 <p style="text-align: justify">{{ object.content }}</p>
+{% if not object.user == request.user %}
     {% with object.user as blogger %}
       {% include "inc_follow_button.html" %}
     {% endwith %}
-{% if not object|is_read:request.user %}
+{% if not object|is_read:request.user and request.user|is_follower_of:object.user %}
     <a class="btn btn-warning" role="button" href="{% url 'markread' object.id request.path %}">Mark read</a>
 {% endif %}
 {% endif %}

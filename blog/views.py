@@ -1,4 +1,3 @@
-from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -9,7 +8,6 @@ from django.views.generic.base import RedirectView
 from blog.models import *
 
 
-
 @method_decorator(login_required, name='dispatch')
 class Posts(ListView):
     template_name = "Posts.html"
@@ -18,15 +16,17 @@ class Posts(ListView):
     title = "Recent posts"
 
     def get(self, request, *args, **kwargs):
-        if not request.user.follower.count():
+        if not self.kwargs.get('slug') and not request.user.follower.count():
             return HttpResponseRedirect(reverse('authors'))
         return super(Posts, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
         if self.kwargs.get('slug'):
-            self.title = 'Posts by ' + 'You' if self.request.user.username == self.kwargs.get('slug') else self.kwargs.get('slug')
-            return super(Posts, self).get_queryset().filter(user__username=self.kwargs.get('slug'))
-        return super(Posts, self).get_queryset().filter(user__blogger__follower=self.request.user).exclude(user=self.request.user).order_by('-created')
+            self.title = 'Posts by ' + (
+                'You' if self.request.user.username == self.kwargs.get('slug') else self.kwargs.get('slug'))
+            return super(Posts, self).get_queryset().filter(user__username=self.kwargs.get('slug')).order_by('-created')
+        return super(Posts, self).get_queryset().filter(user__blogger__follower=self.request.user).exclude(
+            user=self.request.user).order_by('-created')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -38,6 +38,7 @@ class Authors(ListView):
 
     def get_queryset(self):
         return super(Authors, self).get_queryset().exclude(id=self.request.user.id)
+
 
 @method_decorator(login_required, name='dispatch')
 class DetailPost(DetailView):
@@ -62,10 +63,12 @@ class CreatePost(CreateView):
         form.instance.user = self.request.user
         return super(CreatePost, self).form_valid(form)
 
+
 class RedirectTo(RedirectView):
     def get(self, request, *args, **kwargs):
         self.url = kwargs['to']
-        return super(RedirectTo,self).get(request, *args, **kwargs)
+        return super(RedirectTo, self).get(request, *args, **kwargs)
+
 
 @method_decorator(login_required, name='dispatch')
 class FollowBlog(RedirectTo):
