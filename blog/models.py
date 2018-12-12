@@ -11,16 +11,16 @@ from django.contrib.sites.models import Site
 
 User = get_user_model()
 
-# Dont't know if it is need?
-class Blog(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    content = models.TextField(null=True, blank=True)
-
-    # def get_absolute_url(self):
-    #     return reverse('blog', args=[slugify(self.user.username)])
-
-    class Meta:
-        app_label = 'blog'
+# Dont't know if it is need? There is no explanation for blog structure so I consider it is just a user post list
+# class Blog(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     content = models.TextField(null=True, blank=True)
+#
+#     # def get_absolute_url(self):
+#     #     return reverse('blog', args=[slugify(self.user.username)])
+#
+#     class Meta:
+#         app_label = 'blog'
 
 
 class Post(models.Model):
@@ -67,8 +67,3 @@ class Follow(models.Model):
         app_label = 'blog'
         unique_together = ('blogger', 'follower')
 
-    def delete(self, using=None, keep_parents=False):
-        # remove all read marks as requested in task definition
-        # for p in Post.objects.filter(blogger=self.blogger, read=self.follower):
-        #     p.read.remove(self.follower)
-        return super(Follow, self).delete(using=using, keep_parents=keep_parents)
