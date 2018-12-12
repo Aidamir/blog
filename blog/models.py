@@ -61,5 +61,7 @@ class Follow(models.Model):
         unique_together = ('blogger', 'follower')
 
     def delete(self, using=None, keep_parents=False):
-        # self.follower.
+        # remove all read marks as requested in task definition
+        for p in Post.objects.filter(blogger=self.blogger, read=self.follower):
+            p.read.remove(self.follower)
         return super(Follow, self).delete(using=using, keep_parents=keep_parents)
