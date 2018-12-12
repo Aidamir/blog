@@ -43,7 +43,7 @@ class Post(models.Model):
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         if self.id is None:
-            ret = super(self, Post).save(force_insert=force_insert, force_update=force_update, using=using,
+            ret = super(Post, self).save(force_insert=force_insert, force_update=force_update, using=using,
                                          update_fields=update_fields)
             try:
                 send_mass_mail_template('email/NewPost',
