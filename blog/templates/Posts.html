@@ -5,13 +5,13 @@
 <ul class="list-group">
 {% for post in object_list %}
   <li class="list-group-item">{{ post.created }} <a href="{% url 'detail' post.user.username post.id %}">{{ post.title }}</a> By {{ post.user.username }}
-  {% with post.user as blogger %}
-      {% include "inc_follow_button.html" %}
-  {% endwith %}
+  {% if request.user != post.user %}
+      {% with post.user as blogger %}
+          {% include "inc_follow_button.html" %}
+      {% endwith %}
+  {% endif %}
   </li>
 {% endfor %}
 </ul>
-    {% with "posts" as page_url  %}
-        {% include "inc_paginator.html" %}
-    {% endwith %}
+{% include "inc_paginator.html" %}
 {% endblock %}

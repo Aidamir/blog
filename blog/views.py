@@ -15,6 +15,7 @@ class Posts(ListView):
     template_name = "Posts.html"
     model = Post
     paginate_by = 10
+    title = "Recent posts"
 
     def get(self, request, *args, **kwargs):
         if not request.user.follower.count():
@@ -22,6 +23,9 @@ class Posts(ListView):
         return super(Posts, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
+        if self.kwargs.get('slug'):
+            self.title = 'Posts by ' + 'You' if self.request.user.username == self.kwargs.get('slug') else self.kwargs.get('slug')
+            return super(Posts, self).get_queryset().filter(user__username=self.kwargs.get('slug'))
         return super(Posts, self).get_queryset().filter(user__blogger__follower=self.request.user).exclude(user=self.request.user).order_by('-created')
 
 
@@ -30,6 +34,7 @@ class Authors(ListView):
     template_name = "Authors.html"
     model = User
     paginate_by = 10
+    title = "Authors"
 
     def get_queryset(self):
         return super(Authors, self).get_queryset().exclude(id=self.request.user.id)
@@ -45,6 +50,7 @@ class CreatePost(CreateView):
     template_name = "CreatePost.html"
     model = Post
     fields = ['title', 'content']
+    title = "Create post"
 
     def get_form_class(self):
         form = super(CreatePost, self).get_form_class()

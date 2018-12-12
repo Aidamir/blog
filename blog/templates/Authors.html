@@ -4,15 +4,13 @@
 {% block main %}
 <ul class="list-group">
 {% for author in object_list %}
-  <li class="list-group-item">{{ author.username }}
-      <!-- <a href="{% url 'follow' author.username request.path %}">{{ author.username }}</a> -->
+  <li class="list-group-item">
+    <a href="{% url 'blog' author.username %}">{{ author.username }}</a>
   {% with author as blogger %}
       {% include "inc_follow_button.html" %}
   {% endwith %}
   </li>
 {% endfor %}
 </ul>
-    {% with "authors" as page_url  %}
-        {% include "inc_paginator.html" %}
-    {% endwith %}
+{% include "inc_paginator.html" %}
 {% endblock %}
