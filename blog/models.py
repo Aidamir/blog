@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
@@ -27,7 +28,13 @@ class Post(models.Model):
     title = models.CharField(max_length=256)
     content = models.TextField();
     created = models.DateTimeField(auto_now_add=True)
-    read = models.ManyToManyField(User, verbose_name="Read by", related_name="readby")
+    read = models.ManyToManyField("blog.Follow", verbose_name="Read by", related_name="readby")
+
+    def mark_read(self, user):
+        try:
+            self.read.add(Follow.objects.get(blogger=self.user, follower=user))
+        except ObjectDoesNotExist:
+            pass
 
     def get_absolute_url(self):
         #         return reverse('detail', args=[slugify(self.user.username), slugify(unidecode(self.title))])
@@ -62,6 +69,6 @@ class Follow(models.Model):
 
     def delete(self, using=None, keep_parents=False):
         # remove all read marks as requested in task definition
-        for p in Post.objects.filter(blogger=self.blogger, read=self.follower):
-            p.read.remove(self.follower)
+        # for p in Post.objects.filter(blogger=self.blogger, read=self.follower):
+        #     p.read.remove(self.follower)
         return super(Follow, self).delete(using=using, keep_parents=keep_parents)

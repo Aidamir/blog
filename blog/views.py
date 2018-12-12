@@ -84,5 +84,5 @@ class MarkRead(RedirectTo):
             post = Post.objects.get(id=kwargs['pk'])
         except ObjectDoesNotExist:
             return super(MarkRead, self).get(request, *args, **kwargs)
-        post.read.add(request.user)
+        post.mark_read(request.user)
         return super(MarkRead, self).get(request, *args, **kwargs)

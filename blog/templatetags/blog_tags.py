@@ -10,4 +10,4 @@ def is_follower_of(user, blogger):
 
 @register.filter()
 def is_read(post, user):
-    return post.read.filter(id=user.id).exists()
+    return post.read.filter(follower=user.id).exists()
